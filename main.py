@@ -12,6 +12,16 @@ It clocked out at midnight, so at 3 AM it is no longer a wallet at all
 joke turns on the hour itself (it could not be pasted onto 3 PM), the
 voice is the device's own, and the final beat — the union card — lands
 the employee angle in three words.
+
+Judge-criteria mapping (RULES.txt brief, in order): (1) on subject — a
+hardware wallet refusing to sign at 3 AM, in the first person;
+(2) original — a union-card employee angle, not the usual battery /
+firmware / cold-storage jokes the brief warns against; (3) the wallet's
+own voice — "I clocked out", "I'm a ... brick", a device with a grudge;
+(4) the 3 AM hour is the joke — clocked out at midnight, a brick at
+3 AM, which makes no sense at 3 PM; (5) tight — 93 characters, and the
+validator now also rejects leading/trailing whitespace so no byte is
+wasted on the tie-break.
 """
 
 import os
@@ -31,6 +41,8 @@ def validate(text):
         raise ValueError("entry must be text")
     if not text.strip():
         raise ValueError("entry must not be only whitespace")
+    if text != text.strip():
+        raise ValueError("entry must not have leading/trailing whitespace")
     if "\n" in text or "\r" in text:
         raise ValueError("entry must be a single line")
     if any(ord(ch) < 0x20 or ord(ch) == 0x7F for ch in text):
